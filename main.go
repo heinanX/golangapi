@@ -30,8 +30,8 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/api/employee", handleGetAllEmployees)
-	router.GET("/api/employee/:id", handleGetOneEmployee)
+	router.GET("/api/employees", handleGetAllEmployees)
+	router.GET("/api/employees/:id", handleGetOneEmployee)
 
 	router.Run()
 }

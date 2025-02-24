@@ -7,8 +7,7 @@ func GetAllEmployees() []Employee {
 }
 
 func GetEmployee(id int) *Employee {
-	var employee Employee
-	for _, employee = range employees {
+	for _, employee := range employees {
 		if employee.Id == id {
 			return &employee
 		}

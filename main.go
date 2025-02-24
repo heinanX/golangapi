@@ -25,11 +25,23 @@ func handleGetOneEmployee(c *gin.Context) {
 	}
 }
 
+type PageView struct {
+	Title   string
+	Heading string
+}
+
+func handleStartPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "index.html", &PageView{Title: "GolangApi", Heading: "Welcome to my first Golang api"})
+	//c.String(http.StatusOK, "hello world")
+}
+
 func main() {
 	data.Init()
 
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/**")
 
+	router.GET("/", handleStartPage)
 	router.GET("/api/employees", handleGetAllEmployees)
 	router.GET("/api/employees/:id", handleGetOneEmployee)
 

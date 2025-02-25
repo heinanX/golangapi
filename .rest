@@ -3,3 +3,22 @@ GET http://localhost:8080/api/employees
 
 ###
 GET http://localhost:8080/api/employees/2
+
+###
+POST http://localhost:8080/api/employees
+
+{
+    "Age": 24,
+    "Name": "Tony",
+    "City": "Towner"
+
+}
+###
+PUT http://localhost:8080/api/employees/1
+
+{
+    "Age": 2,
+    "Name": "Oliver",
+    "City": "Penny"
+
+}

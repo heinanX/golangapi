@@ -25,6 +25,23 @@ func GetEmployee(id int) *Employee {
 
 }
 
+func CreateNewEmployee(employee Employee) *Employee {
+	db.Create(&employee)
+	return &employee
+}
+func UpdateEmployee(employee Employee) bool {
+	var dbEmployee Employee
+	err := db.First(&dbEmployee, employee.Id).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return false
+	}
+	dbEmployee.Age = employee.Age
+	dbEmployee.Name = employee.Name
+	dbEmployee.City = employee.City
+	db.Save(&employee)
+	return true
+}
+
 // func CreateNewEmployee(newEmployee Employee) {
 // 	employees = append(employees, newEmployee)
 // }
@@ -41,8 +58,4 @@ func Init() {
 		db.Create(&Employee{Age: 5, Name: "Dodger", City: "New York"})
 		db.Create(&Employee{Age: 4, Name: "Tito", City: "Mexico"})
 	}
-
-	// employees = append(employees, Employee{Id: 1, Age: 51, Name: "Oliver", City: "Test"})
-	// employees = append(employees, Employee{Id: 2, Age: 32, Name: "June", City: "Testy"})
-	// employees = append(employees, Employee{Id: 3, Age: 12, Name: "Dodger", City: "New York"})
 }

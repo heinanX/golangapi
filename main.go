@@ -25,6 +25,31 @@ func handleGetOneEmployee(c *gin.Context) {
 	}
 }
 
+func handleCreateEmployee(c *gin.Context) {
+	var employee data.Employee
+	if err := c.BindJSON(&employee); err != nil {
+		return
+	}
+	employee.Id = 0
+	data.CreateNewEmployee(employee)
+	c.IndentedJSON(http.StatusCreated, employee)
+}
+
+func handleUpdateEmployeeById(c *gin.Context) {
+	id := c.Param("id")
+	var employee data.Employee
+	if err := c.BindJSON(&employee); err != nil {
+		return
+	}
+	employee.Id, _ = strconv.Atoi(id)
+
+	if !data.UpdateEmployee(employee) {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "not found"})
+	} else {
+		c.IndentedJSON(http.StatusOK, employee)
+	}
+}
+
 type PageView struct {
 	Title   string
 	Heading string
@@ -44,6 +69,8 @@ func main() {
 	router.GET("/", handleStartPage)
 	router.GET("/api/employees", handleGetAllEmployees)
 	router.GET("/api/employees/:id", handleGetOneEmployee)
+	router.POST("/api/employees/", handleCreateEmployee)
+	router.PUT("/api/employees/:id", handleUpdateEmployeeById)
 
 	router.Run()
 }
